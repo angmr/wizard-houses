@@ -1,14 +1,19 @@
+// Home fetches and filters houses, manages the main search, and renders a list of HouseCard components.
+// Each house is rendered as a <li> containing a <HouseCard house={house} />.
+// Search: The main search bar filters houses by name.
+// Loading State: Spinner is shown while loading.
+
 "use client";
 import {useState, useEffect} from "react";
-import type { House, Trait } from "./types";
+import type { House } from "./types";
 import styles from "./page.module.css";
 import searcbarstyles from "./components/SearchBar.module.css";
 import SearchBar from "./components/SearchBar";
+import HouseCard from "./components/HouseCard";
 
 export default function Home() {
   const [houses, setHouses] = useState<House[]>([]);
   const [houseSearch, setHouseSearch] = useState("");
-  const [traitSearch, setTraitSearch] = useState("");
   const [loading, setLoading] = useState(true);
  
    useEffect(() => {
@@ -46,36 +51,9 @@ export default function Home() {
         />
         <ul>
           {filteredHouses.map((house) => (
-            <li key={house.id}>
-              <div className={styles.housecontainer}>
-                <div className={styles.housenamecontainer}>
-                  <span className={styles.housename}> {house.name}</span>
-                  <span className={styles.houseanimal}> {house.animal}</span>
-                </div>
-                <div className={styles.housegradient}
-                style={{
-                  background: `linear-gradient(135deg, ${
-                  house.houseColours.split(" and ").map((c:string) => c.trim()).join(", ")
-                })`
-              }}></div>
-                <p className={styles.housefounder}>Founder: <strong>{house.founder}</strong></p>
-                <SearchBar
-                  value={traitSearch}
-                  onChange={(e) => setTraitSearch(e.target.value)}
-                  placeholder="Search traits"
-                  className={searcbarstyles.traitsearch}
-                />
-                <ul className={styles.housetraitscontainer}>
-                  {house.traits
-                    .filter((trait: any) =>
-                      trait.name.toLowerCase().includes(traitSearch.toLowerCase())
-                    )
-                  .map((trait: any, idx: number) => (
-                    <li className={styles.housetrait} key={trait.id ?? idx}>{trait.name}</li>
-                  ))}
-                </ul>
-              </div>
-            </li>
+           <li key={house.id}>
+            <HouseCard house = {house} />
+           </li>
           ))}
         </ul>
       </main>
