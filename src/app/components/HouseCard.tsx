@@ -7,11 +7,6 @@
 // Props:
 // - house: The house object containing its details (name, animal, founder, colours, traits).
 
-// Move the markup and logic for a single house card into this component.
-// Move the traitSearch state into HouseCard.
-// Pass the house object as a prop to HouseCard.
-// For better reusability and type safety, consider importing your House and Trait interfaces from your types.ts file.
-
 "use client";
 import React from "react";
 import SearchBar from "./SearchBar";
