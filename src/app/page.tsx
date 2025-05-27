@@ -1,11 +1,12 @@
 "use client";
 import {useState, useEffect} from "react";
+import type { House, Trait } from "./types";
 import styles from "./page.module.css";
 import searcbarstyles from "./components/SearchBar.module.css";
 import SearchBar from "./components/SearchBar";
 
 export default function Home() {
-  const [houses, setHouses] = useState<any[]>([]);
+  const [houses, setHouses] = useState<House[]>([]);
   const [houseSearch, setHouseSearch] = useState("");
   const [traitSearch, setTraitSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,7 @@ export default function Home() {
           className={searcbarstyles.housesearch}
         />
         <ul>
-          {filteredHouses.map((house: any) => (
+          {filteredHouses.map((house) => (
             <li key={house.id}>
               <div className={styles.housecontainer}>
                 <div className={styles.housenamecontainer}>
