@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wizard Houses Fullstack App
 
-## Getting Started
+A fullstack web application built with **Next.js** (React, TypeScript) and a custom **Node.js API server**. This project's purpose is to demonstrate modern frontend development, API integration, and backend proxy/filtering logic. It is designed to showcase clean architecture, interactive UI, and scalable code.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Modern UI:** Built with Next.js and React. Responsive design. Interactive search.
+- **Custom API Server:** Custom **Node.js** API proxy server (simplified REST API) for backend data handling. The server proxies and filters data from the Wizard World API.
+- **Live Search:** Filter houses by name using a responsive search bar. Filter house traits interactively within each house card.
+- **Dynamic Gradients:** Each house card displays a unique CSS gradient based on the house colors included in the fetched data.
+- **TypeScript:** Type safety on both frontend and backend.
+- **CORS Enabled:** Backend is ready for cross-origin requests.
+- **Error Handling:** Handling of loading states (spinner) and API errors.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+- **Frontend:** Next.js (React, TypeScript, CSS Modules)
+- **Backend:** Node.js (Custom API server, TypeScript-ready)
+- **API Source:** [Wizard World API](https://wizard-world-api.herokuapp.com/houses)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Overview
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project consists of:
+- A **Next.js** frontend that displays and filters Hogwarts house data.
+- A **Node.js** backend (`api-server/server.js`) that proxies and filters data from the [Wizard World API](https://wizard-world-api.herokuapp.com/houses), supporting query-based filtering.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🛠️ Implementation Details / Technical Notes
+Technical notes for myself and others.
+
+- **API Proxying & Filtering:**  
+  The backend uses Node.js core modules (`http`, `https`, `url`) to proxy requests to the Wizard World API and filter results server-side based on query parameters (e.g., `name`).
+
+- **CORS Handling:**  
+  The API server sets `Access-Control-Allow-Origin: *` to enable cross-origin requests from the frontend.
+
+- **Frontend Data Fetching:**  
+  Data is fetched from the custom API using `useEffect` and stored in React state.  
+  _Lesson: Managing loading and error states in React with hooks._
+
+- **Live Search:**  
+  Search bars use controlled components and React state for real-time filtering of houses and traits.  
+  _Lesson: Importance of separating state for each search input to avoid shared state bugs._ (I have not implemented this yet.)
+
+- **Dynamic Gradients:**  
+  House card gradients are generated dynamically using inline styles, parsing the `houseColours` string from the API data.  
+  _Lesson: Mapping data-driven values to CSS properties in React._
+
+- **TypeScript Usage:**  
+  Type safety enforced throughout the codebase.  
+  _Lesson: Explicitly typing function parameters (e.g., `.map((c: string) => ...)`) to avoid implicit `any` warnings._
+
+- **Componentization:**  
+  The `SearchBar` is a reusable component, styled with CSS Modules and accepting props for value, onChange, and placeholder.
+
+- **Error Handling:**  
+  The frontend displays a loading spinner while fetching data and handles fetch errors gracefully(?).
+
+- **Git & Deployment:**  
+  Initialize repo, add a remote, push to GitHub.
+  _Lesson: Importance of .gitignore and not tracking node_modules._

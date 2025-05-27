@@ -9,7 +9,7 @@ export default function Home() {
   const [houseSearch, setHouseSearch] = useState("");
   const [traitSearch, setTraitSearch] = useState("");
   const [loading, setLoading] = useState(true);
-
+ 
    useEffect(() => {
     fetch("http://localhost:3001/houses")
       .then((res) => res.json())
