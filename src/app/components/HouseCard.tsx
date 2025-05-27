@@ -41,12 +41,8 @@ const HouseCard: React.FC<{ house: House }> = ({ house }) => {
         className={searcbarstyles.traitsearch}
     />
     <ul className={housecardstyles.housetraitscontainer}>
-        {house.traits
-        .filter((trait: Trait) =>
-            trait.name.toLowerCase().includes(traitSearch.toLowerCase())
-        )
-        .map((trait: Trait, idx: number) => (
-        <li className={housecardstyles.housetrait} key={trait.id ?? idx}>{trait.name}</li>
+        {filteredTraits.map((trait: Trait) => (
+          <li className={housecardstyles.housetrait} key={trait.id}>{trait.name}</li>
         ))}
     </ul>
     </div>
