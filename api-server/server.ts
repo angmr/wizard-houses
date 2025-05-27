@@ -29,7 +29,7 @@ import url from 'url';
 
 import type { House } from '../src/app/types';
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // The remote JSON URL
 const remoteUrl = 'https://wizard-world-api.herokuapp.com/houses';
