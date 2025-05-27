@@ -23,45 +23,48 @@
  *   node server.js
  */
 
-const http = require('http');
-const https = require('https');
-const url = require('url');
+import http from 'http';
+import https from 'https';
+import url from 'url';
+
+import type { House } from '../src/app/types';
+
 const PORT = 3001;
 
 // The remote JSON URL
 const remoteUrl = 'https://wizard-world-api.herokuapp.com/houses';
 
-const server = http.createServer((req, res) => {
+const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
   // Parse the request URL
-  const parsedUrl = url.parse(req.url, true);
-  const pathName = parsedUrl.pathname;
-  const query = parsedUrl.query;
+  const parsedUrl = url.parse(req.url ?? '', true);
+  const pathName: string | null = parsedUrl.pathname;
+  const query: {[key: string]: any} = parsedUrl.query;
 
   if (pathName === '/houses') {
-    const name = query.name ? query.name.toLowerCase() : null;
+    const name: string | null = query.name ? query.name.toLowerCase() : null;
 
     // Make HTTPS request to Heroku JSON
-    https.get(remoteUrl, (remoteRes) => {
+    https.get(remoteUrl, (remoteRes: http.IncomingMessage) => {
       let data = '';
 
       // Gather chunks of data
-      remoteRes.on('data', chunk => {
+      remoteRes.on('data', (chunk: Buffer) => {
         data += chunk;
       });
 
       // Once all data is received
       remoteRes.on('end', () => {
          // Parse the data as JSON
-        let houses = JSON.parse(data);
+        let houses: House[] = JSON.parse(data);
         // Filter houses by name if provided
         if (name) {
-          houses = houses.filter(house => house.name.toLowerCase().includes(name));
+          houses = houses.filter((house:House) => house.name.toLowerCase().includes(name));
         }
         res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         res.end(JSON.stringify(houses));
       });
 
-    }).on('error', (err) => {
+    }).on('error', (err:Error) => {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Failed to fetch remote data' }));
     });
