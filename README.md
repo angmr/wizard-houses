@@ -47,8 +47,9 @@ Technical notes for myself and others.
   _Lesson: Managing loading and error states in React with hooks._
 
 - **Live Search:**  
-  Search bars use controlled components and React state for real-time filtering of houses and traits.  
-  _Lesson: Importance of separating state for each search input to avoid shared state bugs._ (I have not implemented this yet.)
+  Search bars use controlled components and React state for real-time filtering of houses and traits.
+  Each house card manages its own state. The traitSearch state is local to each HouseCard component instance, so typing in one card's search bar only affects that card.
+  _Lesson: Importance of separating state for each search input to avoid shared state bugs._
 
 - **Dynamic Gradients:**  
   House card gradients are generated dynamically using inline styles, parsing the `houseColours` string from the API data.  
